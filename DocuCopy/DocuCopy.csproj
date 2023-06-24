@@ -55,4 +55,24 @@
 		<PackageReference Include="Microsoft.Extensions.Logging.Debug" Version="7.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <None Remove="Algorithm\" />
+	  <None Remove="Model\" />
+	  <None Remove="Model\Enums\" />
+	  <None Remove="Resources\Test\" />
+	  <None Remove="Resources\Test\DocuCopy.cfg" />
+	  <None Remove="Resources\Raw\DocuCopy.cfg" />
+	  <None Remove="Resources\Test\Results.tmp" />
+	</ItemGroup>
+	<ItemGroup>
+	  <Folder Include="Algorithm\" />
+	  <Folder Include="Model\" />
+	  <Folder Include="Model\Enums\" />
+	  <Folder Include="Resources\Test\" />
+	</ItemGroup>
+	<ItemGroup>
+	  <BundleResource Include="Resources\Test\DocuCopy.cfg" />
+	  <BundleResource Include="Resources\Raw\DocuCopy.cfg" />
+	  <BundleResource Include="Resources\Test\Results.tmp" />
+	</ItemGroup>
 </Project>

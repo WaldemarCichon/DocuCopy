@@ -1,4 +1,7 @@
-﻿namespace DocuCopy;
+﻿using DocuCopy.Algorithm;
+using DocuCopy.Model;
+
+namespace DocuCopy;
 
 public partial class MainPage : ContentPage
 {
@@ -11,15 +14,15 @@ public partial class MainPage : ContentPage
 
 	private void OnCounterClicked(object sender, EventArgs e)
 	{
-		count++;
-
-		if (count == 1)
-			CounterBtn.Text = $"Clicked {count} time";
-		else
-			CounterBtn.Text = $"Clicked {count} times";
-
-		SemanticScreenReader.Announce(CounterBtn.Text);
+		
 	}
+
+    void StartButton_Clicked(System.Object sender, System.EventArgs e)
+    {
+		var copyHead = new CopyHead("DocuCopy.cfg");
+		var copier = new Copier(copyHead);
+		copier.doCopy();
+    }
 }
 
 
