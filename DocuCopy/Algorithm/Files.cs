@@ -31,7 +31,7 @@ namespace DocuCopy.Algorithm
                     {
                         file.MatchedCopyEntry = copyEntry;
                         Console.WriteLine(file.Path + " matches "+copyEntry.WildCard);
-                        continue;
+                        break;
                     }
                 }
             }
@@ -86,7 +86,11 @@ namespace DocuCopy.Algorithm
 
         private void checkDestinationPath(string path)
         {
-
+            var directoryPath = Path.GetDirectoryName(path);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
         }
 
         private void delete(string path)

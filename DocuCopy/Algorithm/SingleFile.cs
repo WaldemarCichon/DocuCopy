@@ -28,17 +28,17 @@ namespace DocuCopy.Algorithm
 			{
 				switch (wildcard[wildcardPos])
 				{
-					case '*': filenamePos = checkWildcard(fileName, wildcard, filenamePos, wildcardPos); break;
-					case '?': filenamePos++; break;
-					case '+': filenamePos = Char.IsAsciiDigit(fileName[filenamePos]) ? filenamePos + 1 : -1; break;
-					case '#': filenamePos = checkNumericWildcard(fileName, wildcard, filenamePos, wildcardPos); break;
-                    default: filenamePos = Char.ToLower(fileName[filenamePos]) == Char.ToLower(wildcard[wildcardPos]) ? filenamePos + 1 : -1; break;
+					case '*': (filenamePos, wildcardPos) = checkWildcard(fileName, wildcard, filenamePos, wildcardPos); break;
+					case '?': filenamePos++; wildcardPos++; break;
+					case '+': filenamePos = Char.IsAsciiDigit(fileName[filenamePos]) ? filenamePos + 1 : -1; wildcardPos++; break;
+					case '#': (filenamePos, wildcardPos) = checkNumericWildcard(fileName, wildcard, filenamePos, wildcardPos); break;
+                    default: filenamePos = Char.ToLower(fileName[filenamePos]) == Char.ToLower(wildcard[wildcardPos]) ? filenamePos + 1 : -1; wildcardPos++;  break;
 				}
 				if (filenamePos == -1)
 				{
 					return false;
 				}
-				wildcardPos++;
+				
 				if (filenamePos >= fileName.Length || wildcardPos >= wildcard.Length)
 				{
 					if (filenamePos >= fileName.Length && wildcardPos >= wildcard.Length)
@@ -51,41 +51,52 @@ namespace DocuCopy.Algorithm
 				}
 			}
 		}
-
-        private int checkWildcard(string fileName, string wildcard, int filenamePos, int wildcardPos)
+		
+        private (int filenamePos, int wildcardPos) checkWildcard(string fileName, string wildcard, int filenamePos, int wildcardPos)
         {
-            var firstChar = Char.ToLower(wildcard[++wildcardPos]);
             filenamePos++;
+			wildcardPos++;
             var remainingLength = nextWildcardPosOrLength(wildcard, wildcardPos) - wildcardPos; // remainingLength not to the end of string but to the next wildcard
+            var wildCardCheckString = wildcard.Substring(wildcardPos, remainingLength).ToLower();
+			var fileNameCheckString = String.Empty;
             while ((fileName.Length - filenamePos) >= remainingLength)
             {
-                if (Char.ToLower(fileName[filenamePos]) == firstChar)
+				fileNameCheckString = fileName.Substring(filenamePos, remainingLength).ToLower();
+                if (fileNameCheckString == wildCardCheckString) 
                 {
-                    return filenamePos;
+                    return (filenamePos+remainingLength, wildcardPos+remainingLength);
                 }
 				filenamePos++;
             }
-            return -1;
+			Console.WriteLine(fileNameCheckString);
+            return (-1, -1);
         }
 
-        private int checkNumericWildcard(string fileName, string wildcard, int filenamePos, int wildcardPos)
+        private (int,int) checkNumericWildcard(string fileName, string wildcard, int filenamePos, int wildcardPos)
         {
-			var firstChar = Char.ToLower(wildcard[++wildcardPos]);
-			filenamePos++;
-			var remainingLength = nextWildcardPosOrLength(wildcard, wildcardPos) - wildcardPos; // remainingLength not to the end of string but to the next wildcard
-			while ((fileName.Length - filenamePos) > remainingLength)
+			if (!Char.IsDigit(fileName[filenamePos]))
 			{
-				if (Char.ToLower(fileName[filenamePos]) == firstChar) 
-				{
-					return filenamePos;
-				}
-				if (!Char.IsAsciiDigit(fileName[filenamePos]))
-				{
-					return -1;
-				}
-				filenamePos++;
+				return (-1, -1);
 			}
-			return -1;
+            filenamePos++;
+            var remainingLength = nextWildcardPosOrLength(wildcard, wildcardPos) - wildcardPos; // remainingLength not to the end of string but to the next wildcard
+            var wildCardCheckString = wildcard.Substring(wildcardPos, remainingLength).ToLower();
+            var fileNameCheckString = String.Empty;
+            while ((fileName.Length - filenamePos) >= remainingLength)
+            {
+                fileNameCheckString = fileName.Substring(filenamePos, remainingLength).ToLower();
+                if (fileNameCheckString == wildCardCheckString)
+                {
+                    return (filenamePos + remainingLength, wildcardPos + remainingLength);
+                }
+                if (!Char.IsDigit(fileName[filenamePos]))
+                {
+                    return (-1, -1);
+                }
+                filenamePos++;
+            }
+            Console.WriteLine(fileNameCheckString);
+            return (-1, -1);
         }
 
         private int nextWildcardPosOrLength(string wildcard, int wildcardPos)
@@ -96,6 +107,11 @@ namespace DocuCopy.Algorithm
 				wildcardPos++;
 			}
 			return wildcardPos;
+        }
+
+        public override string ToString()
+        {
+			return Path + " " + (MatchedCopyEntry == null ? "none" : MatchedCopyEntry.WildCard + " - " + MatchedCopyEntry.MovementKind);
         }
     }
 }
