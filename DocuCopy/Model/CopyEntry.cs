@@ -10,7 +10,7 @@ namespace DocuCopy.Model
 		public String Destination { get; set; }
 		public MovementKind MovementKind { get; set; }
 
-		public int Count { get; private set; }
+		public int Count { get; set; }
 
 		public Error Error { get; private set; }
 

@@ -7,8 +7,9 @@ namespace DocuCopy.Model
 		public String DestDir { get; private set; }
 		public String LeftDir { get; private set; }
 		public List<CopyEntry> CopyEntries { get; set; } = new List<CopyEntry>();
+        public string LogDir { get; internal set; }
 
-		public CopyHead(String[] lines)
+        public CopyHead(String[] lines)
 		{
 			SourceDir = lines[0];
 			DestDir = lines[1];

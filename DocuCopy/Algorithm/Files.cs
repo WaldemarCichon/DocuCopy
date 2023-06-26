@@ -112,7 +112,50 @@ namespace DocuCopy.Algorithm
 
         internal void WriteLogs()
         {
+            var count = 0;
+            var notKnown = 0;
+            if (!Directory.Exists(copyHead.LogDir))
+            {
+                Directory.CreateDirectory(copyHead.LogDir);
+            }
+            var logLines = new List<String>();
+            foreach(var singleFile in SingleFiles)
+            {
+                logLines.Append(singleFile.FileName + getOperationName(singleFile.MatchedCopyEntry) + " nach " + singleFile.DestinationPath);
+                count++;
+                if (singleFile.MatchedCopyEntry == null)
+                {
+                    notKnown++;
+                } else
+                {
+                    singleFile.MatchedCopyEntry.Count++;
+                }
+            }
+            logLines.Append("=================");
+            foreach (var copyEntry in copyHead.CopyEntries)
+            {
+                logLines.Append(copyEntry.WildCard + " : " + copyEntry.Count);
+            }
+            logLines.Append("#######################");
+            logLines.Append("Gesamtanzahl: " + count);
 
+            File.WriteAllLines(Path.Combine(copyHead.LogDir, "copy.log"), logLines);
+        }
+
+        private string getOperationName(CopyEntry matchedCopyEntry)
+        {
+            if (matchedCopyEntry == null)
+            {
+                return "nicht zugeordnet, verschoben";
+            }
+            switch (matchedCopyEntry.MovementKind)
+            {
+                case MovementKind.Unknown: return "Unbekannt";
+                case MovementKind.Copy: return "kopiert";
+                case MovementKind.Move: return "Verschoben";
+                case MovementKind.Delete: return "Gelöscht";
+                default: return "????";
+            }
         }
     }
 }
