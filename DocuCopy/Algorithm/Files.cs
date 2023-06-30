@@ -4,7 +4,12 @@ using DocuCopy.Model.Enums;
 
 namespace DocuCopy.Algorithm
 {
-	public class Files
+    public struct LogEntry
+    {
+        public String Text { get; set; }
+    }
+
+    public class Files
 	{
         public SingleFile[] SingleFiles { get; private set; }
 
@@ -70,11 +75,18 @@ namespace DocuCopy.Algorithm
 
         }
 
-        internal void Process()
+        internal void Process(ProgressBar progress)
         {
+            var count = (double) SingleFiles.Length;
+            var processed = 0.0;
             foreach (var singleFile in SingleFiles)
             {
+                processed++;
                 var operation = singleFile.MatchedCopyEntry == null ? MovementKind.Move : singleFile.MatchedCopyEntry.MovementKind;
+                var currentPercentage = processed / count;
+
+                progress.Progress = currentPercentage;
+
                 switch (operation)
                 {
                     case MovementKind.Copy: copy(singleFile.Path, singleFile.DestinationPath); break;
@@ -110,7 +122,7 @@ namespace DocuCopy.Algorithm
             File.Copy(path, destinationPath);
         }
 
-        internal void WriteLogs()
+        internal void WriteLogs(ListView logs)
         {
             var count = 0;
             var notKnown = 0;
@@ -118,10 +130,10 @@ namespace DocuCopy.Algorithm
             {
                 Directory.CreateDirectory(copyHead.LogDir);
             }
-            var logLines = new List<String>();
+            var logLines = new List<LogEntry>();
             foreach(var singleFile in SingleFiles)
             {
-                logLines.Append(singleFile.FileName + getOperationName(singleFile.MatchedCopyEntry) + " nach " + singleFile.DestinationPath);
+                logLines.Append(new LogEntry { Text = singleFile.FileName + getOperationName(singleFile.MatchedCopyEntry) + " nach " + singleFile.DestinationPath });
                 count++;
                 if (singleFile.MatchedCopyEntry == null)
                 {
@@ -131,15 +143,26 @@ namespace DocuCopy.Algorithm
                     singleFile.MatchedCopyEntry.Count++;
                 }
             }
-            logLines.Append("=================");
+            logLines.Append(new LogEntry { Text = "=================" });
             foreach (var copyEntry in copyHead.CopyEntries)
             {
-                logLines.Append(copyEntry.WildCard + " : " + copyEntry.Count);
+                logLines.Append(new LogEntry { Text = copyEntry.WildCard + " : " + copyEntry.Count });
             }
-            logLines.Append("#######################");
-            logLines.Append("Gesamtanzahl: " + count);
+            logLines.Append(new LogEntry { Text = "#######################" });
+            logLines.Append(new LogEntry { Text = "Gesamtanzahl: " + count });
 
-            File.WriteAllLines(Path.Combine(copyHead.LogDir, "copy.log"), logLines);
+            File.WriteAllLines(Path.Combine(copyHead.LogDir, "copy.log"), GetLines(logLines));
+            logs.ItemsSource = logLines;
+        }
+
+        private IEnumerable<string> GetLines(List<LogEntry> logLines)
+        {
+            var lines = new List<String>(logLines.Count);
+            foreach (var logLine in logLines)
+            {
+                lines.Append(logLine.Text);
+            }
+            return lines;
         }
 
         private string getOperationName(CopyEntry matchedCopyEntry)

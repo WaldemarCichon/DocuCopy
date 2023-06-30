@@ -20,7 +20,7 @@ public partial class MainPage : ContentPage
     void StartButton_Clicked(System.Object sender, System.EventArgs e)
     {
 		var copyHead = new CopyHead("DocuCopy.cfg");
-		var copier = new Copier(copyHead);
+		var copier = new Copier(copyHead, Progress, Logs);
 		copier.doCopy();
     }
 }

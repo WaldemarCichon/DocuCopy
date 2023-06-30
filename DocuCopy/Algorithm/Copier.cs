@@ -6,11 +6,16 @@ namespace DocuCopy.Algorithm
 	public class Copier
 	{
         private CopyHead copyHead;
-		public Files Files { get; private set; }
+        private ProgressBar progress;
+        private ListView logs;
 
-        public Copier(CopyHead copyHead)
+        public Files Files { get; private set; }
+
+        public Copier(CopyHead copyHead, ProgressBar progress, ListView logs)
 		{
 			this.copyHead = copyHead;
+			this.progress = progress;
+			this.logs = logs;
 		}
 
 		private string[] getFileNames()
@@ -34,8 +39,8 @@ namespace DocuCopy.Algorithm
 			Files = new Files(fileNames, copyHead);
 			Files.Check();
 			Files.CalcDestination();
-			Files.Process();
-			Files.WriteLogs();
+			Files.Process(progress);
+			Files.WriteLogs(logs);
 		}
 	}
 }

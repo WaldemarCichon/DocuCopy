@@ -7,14 +7,31 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="30"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="Auto"/>
-
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="30"/>
+            <RowDefinition Height="20"/>
         </Grid.RowDefinitions>
         <Label Text="Titel" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
-        <Button Text="Go" Grid.Row="4" x:Name="StartButton" Clicked="StartButton_Clicked"/>
+        <ListView Grid.Row="1" x:Name="Logs" CachingStrategy="RetainElement">
+            <ListView.ItemTemplate>
+
+                <DataTemplate>
+                    <ViewCell>
+                        <HorizontalStackLayout>
+                            <Label Text="Blah" HorizontalOptions="Start" VerticalOptions="Center" TextColor="AliceBlue"/>
+                            <Label Text="{Binding Text}"/>
+                        </HorizontalStackLayout>
+
+                    </ViewCell>
+                </DataTemplate>
+
+            </ListView.ItemTemplate>
+
+        </ListView>
+        <ProgressBar Grid.Row="2" x:Name="Progress" Progress="0.6" VerticalOptions="Center"/>
+        <Button Text="Go" Grid.Row="3" x:Name="StartButton" Clicked="StartButton_Clicked"/>
     </Grid>
 
 </ContentPage>
