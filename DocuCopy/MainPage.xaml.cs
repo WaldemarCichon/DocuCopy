@@ -17,11 +17,15 @@ public partial class MainPage : ContentPage
 		
 	}
 
-    void StartButton_Clicked(System.Object sender, System.EventArgs e)
+    async void StartButton_Clicked(System.Object sender, System.EventArgs e)
     {
-		var copyHead = new CopyHead("DocuCopy.cfg");
-		var copier = new Copier(copyHead, Progress, Logs);
-		copier.doCopy();
+		var result = await FilePicker.Default.PickAsync();
+		if (result != null)
+		{
+			var copyHead = new CopyHead(result.FullPath);
+			var copier = new Copier(copyHead, Progress, Logs);
+			copier.doCopy();
+		}
     }
 }
 

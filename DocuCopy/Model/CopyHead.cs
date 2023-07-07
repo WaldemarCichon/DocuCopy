@@ -23,13 +23,13 @@ namespace DocuCopy.Model
 			}
 		}
 
-		public CopyHead(String filePath): this(readLines(filePath).Result)
+		public CopyHead(String filePath): this(readLines(filePath))
 		{
 
 		}
 
-		private static async Task<string[]> readLines(string fileName)
-		{
+		private static string[] /*Task<string[]>*/ readLines(string fileName)
+		{   /*
 			using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
 			using StreamReader reader = new(fileStream);
 			var lines = new List<String>();
@@ -37,6 +37,16 @@ namespace DocuCopy.Model
 			while ((line = reader.ReadLine()) != null)
 			{
 				lines.Add(line);
+			}
+			*/
+			IEnumerable<String> lines = new List<String>();
+			try
+			{
+				lines = File.ReadAllLines(fileName);
+			} catch (Exception ex)
+			{
+				Console.WriteLine(ex.Message);
+				Console.WriteLine(ex.StackTrace);
 			}
 			return lines.ToArray();
 		}
