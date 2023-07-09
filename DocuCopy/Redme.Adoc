@@ -1,0 +1,10 @@
+H3. Header
+https://stackoverflow.com/questions/70097744/publish-net-maui-application-as-windows-executable
+
+[source,PowerShell]
+....
+msbuild /restore /t:build /p:TargetFramework=net6.0-windows10.0.19041 /p:configuration=release /p:WindowsAppSDKSelfContained=true /p:Platform=x64 /p:WindowsPackageType=None /p:RuntimeIdentifier=win10-x64
+
+msbuild /restore /t:build /p:TargetFramework=net6.0-windows10.0.19041 /p:configuration=release /p:WindowsAppSDKSelfContained=true /p:Platform=x86 /p:WindowsPackageType=None /p:RuntimeIdentifier=win10-x86
+
+msbuild /restore /t:Publish /p:TargetFramework=net6.0-windows10.0.19041 /p:configuration=release /p:WindowsAppSDKSelfContained=true /p:Platform=x64 /p:PublishSingleFile=true /p:WindowsPackageType=None /p:RuntimeIdentifier=win10-x64

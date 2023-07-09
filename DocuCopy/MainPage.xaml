@@ -7,11 +7,11 @@
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="30"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
         <Label Text="Titel" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
         <ListView Grid.Row="1" x:Name="Logs" CachingStrategy="RetainElement">
@@ -30,7 +30,7 @@
             </ListView.ItemTemplate>
 
         </ListView>
-        <ProgressBar Grid.Row="2" x:Name="Progress" Progress="0.6" VerticalOptions="Center"/>
+        <ProgressBar Grid.Row="2" x:Name="Progress" Progress="0.0" VerticalOptions="Center" Margin="10,20"/>
         <Button Text="Go" Grid.Row="3" x:Name="StartButton" Clicked="StartButton_Clicked"/>
     </Grid>
 

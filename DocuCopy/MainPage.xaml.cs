@@ -22,7 +22,7 @@ public partial class MainPage : ContentPage
 		var result = await FilePicker.Default.PickAsync();
 		if (result != null)
 		{
-			var copyHead = new CopyHead(result.FullPath);
+			var copyHead = new CopyHead(result.FullPath, this);
 			var copier = new Copier(copyHead, Progress, Logs);
 			copier.doCopy();
 		}

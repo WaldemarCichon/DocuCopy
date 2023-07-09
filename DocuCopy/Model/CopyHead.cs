@@ -3,32 +3,63 @@ namespace DocuCopy.Model
 {
 	public class CopyHead
 	{
-		public String SourceDir { get; private set; }
+        private readonly Page page;
+
+        public String SourceDir { get; private set; }
 		public String DestDir { get; private set; }
 		public String LeftDir { get; private set; }
 		public List<CopyEntry> CopyEntries { get; set; } = new List<CopyEntry>();
         public string LogDir { get; internal set; }
 
-        public CopyHead(String[] lines)
+        public CopyHead(String filePath, Page page) : this(readLines(filePath), page)
+        {
+
+        }
+        public CopyHead(String[] lines, Page page)
 		{
+			this.page = page;
 			SourceDir = lines[0];
 			DestDir = lines[1];
 			LeftDir = lines[2];
-			for (int i=3; i<lines.Length; i++)
+			LogDir = lines[3];
+			CheckAndProceed(lines);
+		}
+
+		public async void CheckAndProceed(String[] lines)
+		{
+            if (!Directory.Exists(SourceDir))
+            {
+				await page.DisplayAlert("Verzeichnis-Fehler", $"Quellpfad {SourceDir} existiert nicht", "OK");
+				return;
+            }
+            await CheckAndCreate(DestDir);
+            await CheckAndCreate(LeftDir);
+            await CheckAndCreate(LogDir);
+            for (int i = 4; i < lines.Length; i++)
+            {
+                if (lines[i].Length > 0)
+                {
+                    CopyEntries.Add(new CopyEntry(lines[i]));
+                }
+            }
+        }
+
+        private async Task CheckAndCreate(string dir)
+        {
+			if (!Directory.Exists(dir))
 			{
-				if (lines[i].Length > 0)
+				try
 				{
-					CopyEntries.Add(new CopyEntry(lines[i]));
+					Directory.CreateDirectory(dir);
+				}
+				catch (Exception ex)
+				{
+					await page.DisplayAlert("Fehler beim Erzeugen von Verzeichnis", $"Verzeichnis {dir} kann nicht erzeugt werden.\nUrsache: {ex.Message}", "OK");
 				}
 			}
-		}
+        }
 
-		public CopyHead(String filePath): this(readLines(filePath))
-		{
-
-		}
-
-		private static string[] /*Task<string[]>*/ readLines(string fileName)
+        private static string[] /*Task<string[]>*/ readLines(string fileName)
 		{   /*
 			using Stream fileStream = await FileSystem.Current.OpenAppPackageFileAsync(fileName);
 			using StreamReader reader = new(fileStream);

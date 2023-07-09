@@ -30,7 +30,7 @@ namespace DocuCopy.Algorithm
 				{
 					case '*': (filenamePos, wildcardPos) = checkWildcard(fileName, wildcard, filenamePos, wildcardPos); break;
 					case '?': filenamePos++; wildcardPos++; break;
-					case '+': filenamePos = Char.IsAsciiDigit(fileName[filenamePos]) ? filenamePos + 1 : -1; wildcardPos++; break;
+					case '+': filenamePos = Char.IsDigit(fileName[filenamePos]) ? filenamePos + 1 : -1; wildcardPos++; break;
 					case '#': (filenamePos, wildcardPos) = checkNumericWildcard(fileName, wildcard, filenamePos, wildcardPos); break;
                     default: filenamePos = Char.ToLower(fileName[filenamePos]) == Char.ToLower(wildcard[wildcardPos]) ? filenamePos + 1 : -1; wildcardPos++;  break;
 				}
