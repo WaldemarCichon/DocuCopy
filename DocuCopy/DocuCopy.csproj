@@ -28,7 +28,7 @@
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</SupportedOSPlatformVersion>
 		<TargetPlatformMinVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'windows'">10.0.17763.0</TargetPlatformMinVersion>
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'tizen'">6.5</SupportedOSPlatformVersion>
-		<Platforms>AnyCPU;x64</Platforms>
+		<Platforms>AnyCPU</Platforms>
 	</PropertyGroup>
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|AnyCPU'">
@@ -37,6 +37,108 @@
 
 	<PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Debug|net7.0-ios|x64'">
 	  <CreatePackage>false</CreatePackage>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <AssemblyName></AssemblyName>
+	  <SignAssembly></SignAssembly>
+	  <DelaySign>false</DelaySign>
+	  <PublicSign>false</PublicSign>
+	  <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <AssemblyName></AssemblyName>
+	  <SignAssembly></SignAssembly>
+	  <DelaySign>false</DelaySign>
+	  <PublicSign>false</PublicSign>
+	  <AssemblyOriginatorKeyFile></AssemblyOriginatorKeyFile>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+	  <IntermediateOutputPath></IntermediateOutputPath>
+	  <DebugSymbols></DebugSymbols>
+	  <DebugType></DebugType>
+	  <Optimize></Optimize>
+	  <OutputPath></OutputPath>
+	  <DefineConstants></DefineConstants>
+	  <WarningLevel></WarningLevel>
+	  <TreatWarningsAsErrors></TreatWarningsAsErrors>
+	  <DocumentationFile></DocumentationFile>
+	  <ConsolePause>true</ConsolePause>
+	  <ExternalConsole>false</ExternalConsole>
+	  <Commandlineparameters></Commandlineparameters>
+	  <RunWithWarnings>true</RunWithWarnings>
+	  <NoWarn></NoWarn>
+	  <AllowUnsafeBlocks></AllowUnsafeBlocks>
+	  <CheckForOverflowUnderflow></CheckForOverflowUnderflow>
+	  <LangVersion>Default</LangVersion>
+	  <NoStdLib></NoStdLib>
+	  <PlatformTarget>anycpu</PlatformTarget>
+	  <WarningsNotAsErrors></WarningsNotAsErrors>
+	  <Nullable></Nullable>
 	</PropertyGroup>
 	<ItemGroup>
 		<!-- App Icon -->
@@ -69,6 +171,7 @@
 	  <None Remove="Resources\Raw\DocuCopy.cfg" />
 	  <None Remove="Resources\Test\Results.tmp" />
 	  <None Remove="Resources\Raw\DocuCopy %28copy%29.cfg" />
+	  <None Remove="Resources\Test\Ordnerstruktur_VW_Komplett_V3.1_01032023 %281%29.bat" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Algorithm\" />
@@ -81,5 +184,6 @@
 	  <BundleResource Include="Resources\Raw\DocuCopy.cfg" />
 	  <BundleResource Include="Resources\Test\Results.tmp" />
 	  <BundleResource Include="Resources\Raw\DocuCopyMac.cfg" />
+	  <BundleResource Include="Resources\Test\Ordnerstruktur_VW_Komplett_V3.1_01032023 %281%29.bat" />
 	</ItemGroup>
 </Project>

@@ -38,7 +38,8 @@ namespace DocuCopy.Algorithm
 			var fileNames = getFileNames();
 			Files = new Files(fileNames, copyHead);
 			Files.Check();
-			Files.CalcDestination();
+            Files.ApplyVariables(copyHead.Variables);
+            Files.CalcDestination();
 			Files.Process(progress);
 			Files.WriteLogs(logs);
 		}

@@ -113,6 +113,15 @@ namespace DocuCopy.Algorithm
         {
 			return Path + " " + (MatchedCopyEntry == null ? "none" : MatchedCopyEntry.WildCard + " - " + MatchedCopyEntry.MovementKind);
         }
+
+		internal void Apply(List<Variable> variables)
+		{
+			var path = Path;
+			foreach (Variable variable in variables) {
+				path = path.Replace(variable.SearchName, variable.Value);
+			}
+            
+        }
     }
 }
 

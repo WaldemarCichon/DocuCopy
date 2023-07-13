@@ -10,6 +10,7 @@ namespace DocuCopy.Model
 		public String LeftDir { get; private set; }
 		public List<CopyEntry> CopyEntries { get; set; } = new List<CopyEntry>();
         public string LogDir { get; internal set; }
+        public List<Variable> Variables { get; set; }
 
         public CopyHead(String filePath, Page page) : this(readLines(filePath), page)
         {
@@ -22,7 +23,11 @@ namespace DocuCopy.Model
 			DestDir = lines[1];
 			LeftDir = lines[2];
 			LogDir = lines[3];
-			CheckAndProceed(lines);
+			Variables = new List<Variable>();
+			var mainPage = (MainPage)page;
+			Variables.Add(new Variable { Name = "Karobau_Code", Value = mainPage.KarosseriebauCode.Text });
+            Variables.Add(new Variable { Name = "Anlagennummer", Value = mainPage.Anlagennummer.Text });
+            CheckAndProceed(lines);
 		}
 
 		public async void CheckAndProceed(String[] lines)

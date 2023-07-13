@@ -42,6 +42,14 @@ namespace DocuCopy.Algorithm
             }
         }
 
+        internal void ApplyVariables(List<Variable> variables)
+        {
+            foreach (SingleFile singleFile in SingleFiles)
+            {
+                singleFile.Apply(variables);
+            }
+        }
+
         internal void CalcDestination()
         {
             var destination = String.Empty;
@@ -68,11 +76,10 @@ namespace DocuCopy.Algorithm
                 } catch (Exception ex)
                 {
                     Console.WriteLine(ex.Message);
-;                   Console.WriteLine(ex.StackTrace);
+                    Console.WriteLine(ex.StackTrace);
                 }
                 singleFile.DestinationPath = destination;
             }
-
         }
 
         internal void Process(ProgressBar progress)

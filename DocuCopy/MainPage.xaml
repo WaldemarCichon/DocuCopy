@@ -8,13 +8,26 @@
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="10"/>
         </Grid.RowDefinitions>
-        <Label Text="Titel" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
-        <ListView Grid.Row="1" x:Name="Logs" CachingStrategy="RetainElement">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Label Grid.ColumnSpan="2" Text="Kopierapplikation" FontSize="Large" FontAttributes="Bold" HorizontalOptions="Center"/>
+        <HorizontalStackLayout Grid.Row="1" HorizontalOptions="Fill">
+            <Label Text="Karosseriebau-Code"/>
+            <Editor x:Name="KarosseriebauCode" HorizontalOptions="FillAndExpand" x:FieldModifier="Public"/>
+        </HorizontalStackLayout>
+        <HorizontalStackLayout Grid.Row="1" Grid.Column="1">
+            <Label Text="Anlagen-Name"/>
+            <Editor x:Name="Anlagennummer" x:FieldModifier="Public"/>
+        </HorizontalStackLayout>
+        <ListView Grid.Row="2" x:Name="Logs" CachingStrategy="RetainElement">
             <ListView.ItemTemplate>
 
                 <DataTemplate>
@@ -30,8 +43,8 @@
             </ListView.ItemTemplate>
 
         </ListView>
-        <ProgressBar Grid.Row="2" x:Name="Progress" Progress="0.0" VerticalOptions="Center" Margin="10,20"/>
-        <Button Text="Go" Grid.Row="3" x:Name="StartButton" Clicked="StartButton_Clicked"/>
+        <ProgressBar Grid.Row="3" Grid.ColumnSpan="2" x:Name="Progress" Progress="0.0" VerticalOptions="Center" Margin="10,20"/>
+        <Button Text="Go" Grid.Row="4" Grid.ColumnSpan="2" x:Name="StartButton" Clicked="StartButton_Clicked"/>
     </Grid>
 
 </ContentPage>
