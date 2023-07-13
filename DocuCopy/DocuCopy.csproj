@@ -68,6 +68,7 @@
 	  <None Remove="Resources\Test\DocuCopy.cfg" />
 	  <None Remove="Resources\Raw\DocuCopy.cfg" />
 	  <None Remove="Resources\Test\Results.tmp" />
+	  <None Remove="Resources\Raw\DocuCopy %28copy%29.cfg" />
 	</ItemGroup>
 	<ItemGroup>
 	  <Folder Include="Algorithm\" />
@@ -79,5 +80,6 @@
 	  <BundleResource Include="Resources\Test\DocuCopy.cfg" />
 	  <BundleResource Include="Resources\Raw\DocuCopy.cfg" />
 	  <BundleResource Include="Resources\Test\Results.tmp" />
+	  <BundleResource Include="Resources\Raw\DocuCopyMac.cfg" />
 	</ItemGroup>
 </Project>
