@@ -117,10 +117,12 @@ namespace DocuCopy.Algorithm
 		internal void Apply(List<Variable> variables)
 		{
 			var path = Path;
+			var dest = DestinationPath;
 			foreach (Variable variable in variables) {
 				path = path.Replace(variable.SearchName, variable.Value);
+				dest = dest.Replace(variable.SearchName, variable.Value);
 			}
-            
+			Path = path;
         }
     }
 }
