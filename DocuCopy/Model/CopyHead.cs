@@ -11,26 +11,50 @@ namespace DocuCopy.Model
 		public List<CopyEntry> CopyEntries { get; set; } = new List<CopyEntry>();
         public string LogDir { get; internal set; }
         public List<Variable> Variables { get; set; }
+		public String MainFilePath { get; }
+		public String RulesFilePath { get; private set; }
+
+		private int index;
 
         public CopyHead(String filePath, Page page) : this(readLines(filePath), page)
         {
-
+			MainFilePath = filePath;
         }
+
         public CopyHead(String[] lines, Page page)
 		{
 			this.page = page;
-			SourceDir = lines[0];
-			DestDir = lines[1];
-			LeftDir = lines[2];
-			LogDir = lines[3];
 			Variables = new List<Variable>();
+			readHeader(lines);
+			readRules(lines);
 			var mainPage = (MainPage)page;
-			Variables.Add(new Variable { Name = "Karobau_Code", Value = mainPage.KarosseriebauCode.Text });
-            Variables.Add(new Variable { Name = "Anlagennummer", Value = mainPage.Anlagennummer.Text });
-            CheckAndProceed(lines);
+			//Variables.Add(new Variable { Name = "Karobau_Code", Value = mainPage.KarosseriebauCode.Text });
+            //Variables.Add(new Variable { Name = "Anlagennummer", Value = mainPage.Anlagennummer.Text });
 		}
 
-		public async void CheckAndProceed(String[] lines)
+		private void readHeader(String[] lines)
+		{
+			foreach (var line in lines)
+			{
+				var parts = line.Split("=");
+				switch (parts[0])
+				{
+					case "SorceDir":
+					case "Quellverzeichnis": SourceDir = parts[1]; break;
+					case "DestDir":
+					case "Zielverzeichnis": DestDir = parts[1]; break;
+					case "LeftDir":
+					case "Restverzeichnis": LeftDir = parts[1]; break;
+					case "LogDir":
+					case "Logverzeichnis": LogDir = parts[1]; break;
+					case "RulesFilePath":
+					case "Regeldatei": RulesFilePath = parts[1]; break;
+					default: Variables.Add(new Variable { Name = parts[0], Value = parts[1] }); break;
+				}
+			}
+		}
+
+		public async void readRules(String[] lines)
 		{
             if (!Directory.Exists(SourceDir))
             {
@@ -40,7 +64,7 @@ namespace DocuCopy.Model
             await CheckAndCreate(DestDir);
             await CheckAndCreate(LeftDir);
             await CheckAndCreate(LogDir);
-            for (int i = 4; i < lines.Length; i++)
+            for (int i = 0; i < lines.Length; i++)
             {
                 if (lines[i].Length > 0)
                 {
